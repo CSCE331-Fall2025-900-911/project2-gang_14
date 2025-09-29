@@ -71,8 +71,9 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS orders (
     order_id INT PRIMARY KEY,
     employee_id INT,
+    total_order_price FLOAT,
+    order_date DATE,
     order_time TIME,
-    total_price FLOAT,
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 """)
