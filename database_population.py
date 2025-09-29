@@ -70,8 +70,9 @@ CREATE TABLE IF NOT EXISTS employee (
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS orders (
     order_id INT PRIMARY KEY,
-    discount BOOLEAN,
     employee_id INT,
+    order_time TIME,
+    total_price FLOAT,
     FOREIGN KEY (employee_id) REFERENCES employee(employee_id)
 );
 """)
