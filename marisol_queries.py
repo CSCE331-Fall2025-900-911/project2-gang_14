@@ -43,3 +43,9 @@ cursor.execute("""
     GROUP BY day_of_week
     ORDER BY num_orders DESC;
 """)
+
+# Commit and close
+conn.commit()
+cursor.close()
+conn.close()
+
