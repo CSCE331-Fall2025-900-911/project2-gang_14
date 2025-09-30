@@ -19,6 +19,17 @@ CREATE TABLE IF NOT EXISTS customization (
     extra_cost FLOAT
 );
 """)
+customizations = {
+    "Ice Level" : [1, 0.5, 0, 1.5], #1 is regular ice
+    "Sweetness" : [100, 80, 50, 30, 0, 120], #100 is regular sweetness
+    "Toppings" : ["Regular Pearl", "Lychee Jelly", "Pudding", "Herb Jelly", "Ice Cream", "Mini Pearls", "Aiyu Jelly", 
+                  "Creama", "Crystal Boba", "Mango Popping Boba", "Strawberry Popping Boba", "Coffee Jelly", "Honey Jelly", 
+                  "Peach Popping Boba", "Fresh Milk"],
+    "Miscellaneous" : ["Double Topping", "Triple Topping", "Double Creama", "Split into two cups", "No toppings", "Sub pearls"], 
+    #if customer chooses another topping that is not pearl where pearls are included in the drink the select sub pearls
+    "Temperature" : [0, 1] #0 is cold
+}
+
 customization =[
     [1,"Ice Level", "1", 0.0],
     [2,"Ice Level", "0.5", 0.0],
@@ -334,7 +345,7 @@ for drink_dict in all_drink_dicts:
     for drink_name, ingridient_list in drink_dict.items():
         product_id = drink_map.get(drink_name.strip())
         for ing in ingridient_list:
-            ingridient_id = inngridient_map.get(ing)
+            ingredient_id= ingredient_map.get(ing)
             cursor.execute(
             """
             INSERT INTO drink_ingredient (product_id, ingredient_id, quantity_needed)
@@ -343,18 +354,7 @@ for drink_dict in all_drink_dicts:
             """,
             (product_id, ingredient_id, 1)
             )
-
-
-
-
-
-
-
-
-
-
-
-
+            
 
 # Commit and close
 conn.commit()
