@@ -12,13 +12,27 @@ cursor = conn.cursor()
 #3 special query: peak day sales 
 #tells us which day had the most revenue
 cursor.execute("""
+    WITH ranked_orders AS (
+        SELECT 
+            o.order_id,
+            o.order_date::date AS order_day,
+            SUM(d.price) AS order_total,
+            ROW_NUMBER() OVER (
+                PARTITION BY o.order_date::date 
+                ORDER BY SUM(d.price) DESC
+            ) AS rank_in_day
+        FROM orders o
+        JOIN order_drink od ON o.order_id = od.order_id
+        JOIN drink d ON od.product_id = d.product_id
+        GROUP BY o.order_id, o.order_date::date
+    )
     SELECT 
-        orders.order_date,
-        SUM(orders.total_order_price) AS total_sales
-    FROM orders 
-    GROUP BY orders.order_date
-    ORDER BY total_sales DESC
-    LIMIT 10;
+        order_day,
+        SUM(order_total) AS top10_sales
+    FROM ranked_orders
+    WHERE rank_in_day <= 10
+      AND order_day = DATE '2025-09-25'  -- Change date here
+    GROUP BY order_day;
 """)
 
 #revenue by drink category
