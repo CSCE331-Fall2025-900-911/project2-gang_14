@@ -47,13 +47,15 @@ cursor.execute("""
     ORDER BY total_revenue DESC;
 """)
 
-#number of orders sorted by day of the week 
-#tells us which days of the week were busiest
+#number of orders sorted by day of the week per week
+#tells us which days of the week were busiest by week
 cursor.execute("""
     SELECT 
-        TO_CHAR(orders.order_date, 'Day') AS day_of_week,
-        COUNT(orders.order_id) AS num_orders
-    FROM orders 
+        TO_CHAR(o.order_date, 'FMDay') AS day_of_week,
+        COUNT(o.order_id) AS num_orders
+    FROM orders o
+    WHERE EXTRACT(WEEK FROM o.order_date) = 2   -- Change week number (1-36) here
     GROUP BY day_of_week
     ORDER BY num_orders DESC;
 """)
+
