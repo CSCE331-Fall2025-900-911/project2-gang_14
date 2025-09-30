@@ -35,26 +35,31 @@ cursor.execute("""
     GROUP BY order_day;
 """)
 
-#revenue by drink category
-#tells us which drink category made the most money
+#revenue by drink category over a specific date range
+#tells us which drink category made the most money over a specified amount of time
 cursor.execute("""
     SELECT 
-        drink.product_type,
-        SUM(order_drink.price) AS total_revenue
-    FROM order_drink 
-    JOIN drink ON order_drink.product_id = drink.product_id
-    GROUP BY drink.product_type
-    ORDER BY total_revenue DESC;
+        d.product_type,
+        SUM(od.price) AS total_revenue,
+        ROUND(100 * SUM(od.price)::numeric / SUM(SUM(od.price)) OVER ()::numeric, 2) AS percentage,
+        RANK() OVER (ORDER BY SUM(od.price) DESC) AS category_rank
+    FROM orders o
+    JOIN order_drink od ON o.order_id = od.order_id
+    JOIN drink d ON od.product_id = d.product_id
+    WHERE o.order_date >= DATE '2025-08-01' -- Input starting date (start date of data- 2025-01-01)
+    AND o.order_date < DATE '2025-09-01' -- Input ending date (end date of data: 2025-11-01)
+    GROUP BY d.product_type
+    ORDER BY category_rank;
 """)
 
 #number of orders sorted by day of the week per week
-#tells us which days of the week were busiest by week
+#tells us which days of the week were busiest by week number
 cursor.execute("""
     SELECT 
         TO_CHAR(o.order_date, 'FMDay') AS day_of_week,
         COUNT(o.order_id) AS num_orders
     FROM orders o
-    WHERE EXTRACT(WEEK FROM o.order_date) = 2   -- Change week number (1-36) here
+    WHERE EXTRACT(WEEK FROM o.order_date) = 2   -- Change week number (1-40) here
     GROUP BY day_of_week
     ORDER BY num_orders DESC;
 """)
