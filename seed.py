@@ -64,7 +64,7 @@ packaging_cost = {"cup": 0.15, "lid": 0.05, "straw": 0.05}
 milk_tea_drink_to_ing = {
     "Classic Pearl Milk Tea": ["Black Tea", "Sugar Syrup", "Milk", "Black Tapioca Pearls"],
     "Thai Pearl Milk Tea": ["Thai Tea Mix", "Sweetened Condensed Milk", "Black Tapioca Pearls"],
-    "Taro powder": ["Taro Powder", "Milk", "Sugar Syrup", "Black Tapioca Pearls"],
+    "Taro Pearl Milk Tea": ["Taro Powder", "Milk", "Sugar Syrup", "Black Tapioca Pearls"],
     "Golden Retriever": ["Black Milk Tea", "Pudding", "Coffee", "Lychee Jelly", "Black Tapioca Pearls"]
 }
 
