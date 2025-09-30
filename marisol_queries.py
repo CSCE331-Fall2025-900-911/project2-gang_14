@@ -64,3 +64,8 @@ cursor.execute("""
     ORDER BY num_orders DESC;
 """)
 
+# Commit and close
+conn.commit()
+cursor.close()
+conn.close()
+
