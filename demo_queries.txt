@@ -1,4 +1,4 @@
-"Special Query #1: Number of orders per week". # 1
+"Special Query #1: Number of orders per week". #1 CHOSEN BY TA
 SELECT 
     EXTRACT(WEEK FROM order_date) AS week,
     COUNT(order_id) AS orders
@@ -17,7 +17,7 @@ JOIN drink p ON od.product_id = p.product_id
 GROUP BY order_hour
 ORDER BY order_hour;
 
-"Special Query #3: peak day sales". # 2
+"Special Query #3: peak day sales". # 2 CHOSEN BY TA
 WITH ranked_orders AS (
         SELECT 
             o.order_id,
@@ -70,7 +70,7 @@ ORDER BY times_ordered DESC
 LIMIT 5;
 
 
-"Query #7: Most expensive orders where order_total is distinct" #3
+"Query #7: Most expensive orders where order_total is distinct" #3 CHOSEN BY TA
 SELECT DISTINCT ON (order_total)
 o.order_id,
 SUM(p.price) AS order_total,
@@ -83,7 +83,7 @@ ORDER BY order_total DESC
 LIMIT 5; 
 
 
-"Query #8: Revenue by drink category over a specific date range" #4
+"Query #8: Revenue by drink category over a specific date range" #4 CHOSEN BY TA
 SELECT 
     d.product_type,
     SUM(od.price) AS total_revenue,
