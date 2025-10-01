@@ -59,7 +59,7 @@ cursor.execute("""
         TO_CHAR(o.order_date, 'FMDay') AS day_of_week,
         COUNT(o.order_id) AS num_orders
     FROM orders o
-    WHERE EXTRACT(WEEK FROM o.order_date) = 2   -- Change week number (1-40) here
+    WHERE EXTRACT(WEEK FROM o.order_date) = 39   -- Change week number (1-40) here
     GROUP BY day_of_week
     ORDER BY num_orders DESC;
 """)
