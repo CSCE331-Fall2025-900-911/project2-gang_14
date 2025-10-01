@@ -325,13 +325,16 @@ def seed_data(cursor):
     )
     ingredient_ids = cursor.fetchall()
 
-    for (ing_id,) in ingredient_ids:
-        cursor.execute(
-            """
-            INSERT INTO inventory_ingredient (inventory_id, ingredient_id)
-            VALUES (%s, %s)
-            ON CONFLICT DO NOTHING;
-            """,
-            (inventory_id, ing_id)
-        )
     print("Seeding complete!")
+import psycopg2   
+conn = psycopg2.connect(
+    host="csce-315-db.engr.tamu.edu",
+    database="gang_14_db",
+    user="gang_14",
+    password="gang_14",
+)  
+cursor = conn.cursor()
+seed_data(cursor)
+conn.commit()
+cursor.close()
+conn.close()
