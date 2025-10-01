@@ -12,6 +12,9 @@ conn = psycopg2.connect(
 )
 cursor = conn.cursor()
 #extract week in postgreSQL and count the total orders
+
+#Siya's Queries
+
 cursor.execute("""
     SELECT 
         EXTRACT(WEEK FROM order_date) AS week,
@@ -35,12 +38,12 @@ cursor.execute("""
 
 # count the number of ingredients in a drink
 cursor.execute("""
-    SELECT 
-        p.product_name,
-        COUNT(di.ingredient_id) AS ingredients
-    FROM drink_ingredient di
-    join product p on o.product_id=di.product_id
-    group by p.product_name
-    order by p.product_name  
+               SELECT 
+               d.product_name,COUNT(DISTINCT di.ingredient_id) AS ingredients_in_a_drink FROM drink d
+               JOIN drink_ingredient di 
+               ON d.product_id = di.product_id
+               GROUP BY d.product_name
+               ORDER BY d.product_name;
+
     ;
 """) 
