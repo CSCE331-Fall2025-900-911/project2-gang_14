@@ -124,6 +124,7 @@ conn = psycopg2.connect(
     password="gang_14",
 )
 cursor = conn.cursor()
+drop_schema(cursor)
 create_schema(cursor)
 conn.commit()
 cursor.close()
