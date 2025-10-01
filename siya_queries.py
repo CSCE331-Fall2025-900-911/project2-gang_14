@@ -47,3 +47,8 @@ cursor.execute("""
 
     ;
 """) 
+
+# Commit and close
+conn.commit()
+cursor.close()
+conn.close()
