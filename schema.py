@@ -102,16 +102,7 @@ def create_schema(cursor):
     );
     """)
 
-    # Inventory + Ingredient join
-    cursor.execute("""
-    CREATE TABLE IF NOT EXISTS inventory_ingredient (
-        inventory_id INT,
-        ingredient_id INT,
-        PRIMARY KEY (inventory_id, ingredient_id),
-        FOREIGN KEY (inventory_id) REFERENCES inventory(inventory_id),
-        FOREIGN KEY (ingredient_id) REFERENCES ingredient(ingredient_id)
-    );
-    """)
+
 
     # Customization + Topping join
     cursor.execute("""
@@ -123,3 +114,19 @@ def create_schema(cursor):
         FOREIGN KEY (ingredient_id) REFERENCES ingredient(ingredient_id)
     );
     """)
+    
+
+import psycopg2   
+conn = psycopg2.connect(
+    host="csce-315-db.engr.tamu.edu",
+    database="gang_14_db",
+    user="gang_14",
+    password="gang_14",
+)
+cursor = conn.cursor()
+create_schema(cursor)
+conn.commit()
+cursor.close()
+conn.close()
+
+
